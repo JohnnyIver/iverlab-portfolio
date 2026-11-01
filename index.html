@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Johnny Iver</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0b0f;
+    --surface: #14171d;
+    --border: #262b33;
+    --ink: #ffffff;
+    --muted: #9aa1ad;
+    --accent: #e02f44;
+    --accent2: #4f8df0;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  .glow {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(90px);
+    opacity: 0.35;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .glow-1 { width: 520px; height: 520px; background: var(--accent); top: -180px; left: -120px; animation: float1 16s ease-in-out infinite; }
+  .glow-2 { width: 460px; height: 460px; background: var(--accent2); bottom: -160px; right: -100px; animation: float2 18s ease-in-out infinite; }
+
+  @keyframes float1 {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(60px, 40px); }
+  }
+  @keyframes float2 {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(-50px, -30px); }
+  }
+
+  .wrap { position: relative; z-index: 1; max-width: 960px; margin: 0 auto; padding: 80px 24px 60px; }
+
+  header.hero { margin-bottom: 64px; }
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .eyebrow .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); animation: pulse 2s ease-in-out infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+  h1 { font-size: 46px; line-height: 1.15; margin: 0 0 16px; letter-spacing: -0.02em; }
+  h1 .cursor { display: inline-block; width: 3px; height: 38px; background: var(--accent); margin-left: 4px; vertical-align: -6px; animation: blink 1s step-end infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  .bio { color: var(--muted); font-size: 16px; line-height: 1.65; max-width: 580px; margin: 0; }
+
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 20px;
+  }
+
+  .windows { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 64px; }
+
+  .window {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  }
+  .window:hover {
+    transform: translateY(-6px);
+    border-color: #3a4150;
+    box-shadow: 0 20px 40px -20px rgba(0,0,0,0.6);
+  }
+
+  .window-bar {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 11px 14px;
+    background: #0e1116;
+    border-bottom: 1px solid var(--border);
+  }
+  .window-bar i { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+  .window-bar i:nth-child(1) { background: #ff5f57; }
+  .window-bar i:nth-child(2) { background: #febc2e; }
+  .window-bar i:nth-child(3) { background: #28c840; }
+  .window-bar span {
+    margin-left: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .window-body { padding: 22px 20px 24px; }
+  .window-icon {
+    width: 40px; height: 40px;
+    border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 16px;
+    font-size: 18px;
+  }
+  .icon-a { background: rgba(224,47,68,0.15); color: var(--accent); }
+  .icon-b { background: rgba(79,141,240,0.15); color: var(--accent2); }
+
+  .window h2 { font-size: 17px; margin: 0 0 8px; letter-spacing: -0.01em; }
+  .window p { font-size: 13.5px; color: var(--muted); line-height: 1.55; margin: 0 0 16px; }
+  .window .open {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--ink);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .window .open svg { transition: transform 0.2s ease; }
+  .window:hover .open svg { transform: translateX(3px); }
+
+  .contact {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .contact a {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 11px 18px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--ink);
+    text-decoration: none;
+    font-size: 13.5px;
+    font-weight: 500;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+  .contact a:hover { border-color: #3a4150; transform: translateY(-2px); }
+
+  footer {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 30px 24px 40px;
+    color: var(--muted);
+    font-size: 12px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  @media (max-width: 680px) {
+    .windows { grid-template-columns: 1fr; }
+    h1 { font-size: 34px; }
+    .wrap { padding: 56px 20px 40px; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="glow glow-1"></div>
+  <div class="glow glow-2"></div>
+
+  <div class="wrap">
+    <header class="hero">
+      <p class="eyebrow"><span class="dot"></span> disponivel</p>
+      <h1 id="title">Johnny Iver<span class="cursor"></span></h1>
+      <p class="bio">Infra, monitoramento e automacao. Zabbix, Grafana e as ferramentas que ficam entre o sistema e quem precisa entender ele.</p>
+    </header>
+
+    <section>
+      <p class="section-label">Projetos</p>
+      <div class="windows">
+        <a class="window" href="https://zabbix-api-helper.iverlab.com.br" target="_blank" rel="noopener">
+          <div class="window-bar"><i></i><i></i><i></i><span>zabbix-api-helper.iverlab.com.br</span></div>
+          <div class="window-body">
+            <div class="window-icon icon-a">⚙</div>
+            <h2>Zabbix API Helper</h2>
+            <p>Gerador de requisicoes pra API do Zabbix: monta o cURL, mostra o JSON, sem precisar decorar metodo nenhum.</p>
+            <span class="open">abrir <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </div>
+        </a>
+
+        <a class="window" href="https://dashboards.iverlab.com.br" target="_blank" rel="noopener">
+          <div class="window-bar"><i></i><i></i><i></i><span>dashboards.iverlab.com.br</span></div>
+          <div class="window-body">
+            <div class="window-icon icon-b">▣</div>
+            <h2>Dashboards Grafana</h2>
+            <p>Galeria de dashboards construidas do zero: topologia, saude de disco, metricas de servidor, tudo em HTML Graphics.</p>
+            <span class="open">abrir <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section>
+      <p class="section-label">Contato</p>
+      <div class="contact">
+        <a href="https://www.linkedin.com/in/viniciuscosta2" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452z"/></svg>
+          LinkedIn
+        </a>
+        <a href="https://instagram.com/viniciusmaui.bjj" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          @viniciusmaui.bjj
+        </a>
+      </div>
+    </section>
+  </div>
+
+  <footer>iverlab.com.br</footer>
+
+  <script>
+    const names = ["Johnny Iver", "SRE / DevOps"];
+    const el = document.getElementById("title");
+    let i = 0;
+    function swap() {
+      i = (i + 1) % names.length;
+      el.style.opacity = 0;
+      setTimeout(() => {
+        el.innerHTML = names[i] + '<span class="cursor"></span>';
+        el.style.opacity = 1;
+      }, 300);
+    }
+    el.style.transition = "opacity 0.3s ease";
+    setInterval(swap, 3200);
+  </script>
+</body>
+</html>
